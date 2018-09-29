@@ -118,8 +118,6 @@ function OpenXHtb(configs) {
       var gdprConsent = ComplianceService.gdpr.getConsent();
       var gdprPrivacyEnabled = ComplianceService.isPrivacyEnabled();
 
-
-
       for (var i = 0; i < returnParcels.length; i++) {
         auidString += returnParcels[i].xSlotRef.adUnitId.toString() + ',';
         ausString += Size.arrayToString(returnParcels[i].xSlotRef.sizes, ',') + '|';
@@ -220,7 +218,6 @@ function OpenXHtb(configs) {
 
             /* adUnitId are strings in the configuration, but the openX endpoint return them as numbers */
             bids[i].adunitid = String(bids[i].adunitid);
-
             for (var j = unusedReturnParcels.length - 1; j >= 0; j--) {
                 if (unusedReturnParcels[j].xSlotRef.adUnitId === bids[i].adunitid) {
                     curReturnParcel = unusedReturnParcels[j];
@@ -258,7 +255,7 @@ function OpenXHtb(configs) {
                         xSlotNames: [curReturnParcel.xSlotName]
                     });
 
-                    if (outstandingXSlotNames[curHtSlotId] && outstandingXSlotNames[curHtSlotId][curReturnParcel.requestId]) {
+                    if (outstandingXSlotNames && outstandingXSlotNames[curHtSlotId] && outstandingXSlotNames[curHtSlotId][curReturnParcel.requestId]) {
                         Utilities.arrayDelete(outstandingXSlotNames[curHtSlotId][curReturnParcel.requestId], curReturnParcel.xSlotName);
                     }
                 }
@@ -299,7 +296,7 @@ function OpenXHtb(configs) {
                     xSlotNames: [curReturnParcel.xSlotName]
                 });
 
-                if (outstandingXSlotNames[curHtSlotId] && outstandingXSlotNames[curHtSlotId][curReturnParcel.requestId]) {
+                if (outstandingXSlotNames && outstandingXSlotNames[curHtSlotId] && outstandingXSlotNames[curHtSlotId][curReturnParcel.requestId]) {
                     Utilities.arrayDelete(outstandingXSlotNames[curHtSlotId][curReturnParcel.requestId], curReturnParcel.xSlotName);
                 }
             }
@@ -444,15 +441,16 @@ function OpenXHtb(configs) {
          * ---------------------------------- */
 
         //? if (TEST) {
-        __profile: __profile,
+        profile: __profile,
         //? }
 
         /* Functions
          * ---------------------------------- */
 
         //? if (TEST) {
-        __parseResponse: __parseResponse
+        parseResponse: __parseResponse,
             //? }
+        generateRequestObj: __generateRequestObj,
     };
 
     return Classify.derive(__baseClass, derivedClass);

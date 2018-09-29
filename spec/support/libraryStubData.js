@@ -28,6 +28,18 @@ var libraryStubData = {
         getPageUrl: function () {
             return 'http://www.indexexchange.com';
         },
+        getViewportWidth: function () {
+            return 1280;
+        },
+        getViewportHeight: function () {
+            return 800;
+        },
+        isTopFrame: function () {
+            return true;
+        },
+        getHostname: function () {
+            return 'localhost';
+        },
         topWindow: mock.getWindow()
     },
     'classify.js': {
@@ -92,7 +104,8 @@ var libraryStubData = {
             }
 
             return queryString.slice(0, -1);
-        }
+        },
+        ajax: function() {}
     },
     'space-camp.js': {
         NAMESPACE: undefined,
@@ -112,6 +125,19 @@ var libraryStubData = {
                 registerAd: function () {
                     return '_' + Math.random().toString(36).substr(2, 9);
                 }
+            },
+            ComplianceService: {
+                isPrivacyEnabled: function() {
+                    return true;
+                },
+                gdpr: {
+                    getConsent: function() {
+                        return {
+                        applies: true,
+                        consentString: 'BOQ7WlgOQ7WlgABABwAAABJOACgACAAQABA'
+                        }
+                    }
+                }
             }
         },
     },
@@ -124,9 +150,16 @@ var libraryStubData = {
         },
         now: function () {
             return (new Date()).getTime();
+        },
+        getTimezoneOffset: function () {
+            return (new Date().getTimezoneOffset());
         }
     },
-    'utilities.js': {},
+    'utilities.js': {
+        isArray: function(array){
+            return Array.isArray(array);
+        },
+    },
     'whoopsie.js': function () {
         return null;
     },

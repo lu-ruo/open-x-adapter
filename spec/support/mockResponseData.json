@@ -1,5 +1,121 @@
 {
-    "bid": [],
-    "pass": [],
-    "deals": []
+    "bid": {
+        "ads": {
+            "ad": [{
+                "adunitid":54321,
+                "pub_rev":"100",
+                "html":"<div></div>",
+                "creative":[{
+                    "width":"300",
+                    "height":"250"
+                }]
+            },{
+                "adunitid":12345,
+                "pub_rev":"200",
+                "html":"<div></div>",
+                "creative":[{
+                    "width":"300",
+                    "height":"600"
+                }]
+            },{
+                "adunitid":654321,
+                "pub_rev":"100",
+                "html":"<div></div>",
+                "creative":[{
+                    "width":"728",
+                    "height":"90"
+                }]
+            }]
+        }
+    },
+    "pass": {
+        "ads": {
+            "ad": [{
+                "adunitid":54321,
+                "pub_rev":"-100",
+                "html":"<div></div>",
+                "creative":[{
+                    "width":"300",
+                    "height":"250"
+                }]
+            },{
+                "adunitid":12345,
+                "pub_rev":"-200",
+                "html":"<div></div>",
+                "creative":[{
+                    "width":"300",
+                    "height":"600"
+                }]
+            },{
+                "adunitid":654321,
+                "pub_rev":"-100",
+                "html":"<div></div>",
+                "creative":[{
+                    "width":"728",
+                    "height":"90"
+                }]
+            }]
+        }
+    },
+    "deals": {
+        "ads": {
+            "ad": [{
+                "adunitid":54321,
+                "pub_rev":"100",
+                "html":"<div></div>",
+                "deal_id":1,
+                "creative":[{
+                    "width":"300",
+                    "height":"250"
+                }]
+            },{
+                "adunitid":12345,
+                "pub_rev":"200",
+                "html":"<div></div>",
+                "deal_id":2,
+                "creative":[{
+                    "width":"300",
+                    "height":"600"
+                }]
+            },{
+                "adunitid":654321,
+                "pub_rev":"100",
+                "html":"<div></div>",
+                "deal_id":2,
+                "creative":[{
+                    "width":"728",
+                    "height":"90"
+                }]
+            }]
+        }
+    },
+    "dealid": {
+        "ads": {
+            "ad": [{
+                "adunitid":54321,
+                "html":"<div></div>",
+                "deal_id":1,
+                "creative":[{
+                    "width":"300",
+                    "height":"250"
+                }]
+            },{
+                "adunitid":12345,
+                "html":"<div></div>",
+                "deal_id":2,
+                "creative":[{
+                    "width":"300",
+                    "height":"600"
+                }]
+            },{
+                "adunitid":654321,
+                "html":"<div></div>",
+                "deal_id":2,
+                "creative":[{
+                    "width":"728",
+                    "height":"90"
+                }]
+            }]
+        }
+    }
 }
