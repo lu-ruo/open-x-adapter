@@ -118,6 +118,9 @@ function OpenXHtb(configs) {
       var gdprConsent = ComplianceService.gdpr.getConsent();
       var gdprPrivacyEnabled = ComplianceService.isPrivacyEnabled();
 
+      var tradeDeskId;
+
+      // process auid and aus query params
       for (var i = 0; i < returnParcels.length; i++) {
         auidString += returnParcels[i].xSlotRef.adUnitId.toString() + ',';
         ausString += Size.arrayToString(returnParcels[i].xSlotRef.sizes, ',') + '|';
@@ -125,6 +128,24 @@ function OpenXHtb(configs) {
 
       auidString = auidString.slice(0, -1);
       ausString = ausString.slice(0, -1);
+
+      // process tdid query param
+      var identityData = returnParcels[0].identityData;
+
+      if (identityData && identityData.AdserverOrgIp && identityData.AdserverOrgIp.data) {
+        // identityData normal format
+        if (identityData.AdserverOrgIp.data.uids) {
+          var adsrvrUids = identityData.AdserverOrgIp.data.uids;
+
+          if (Utilities.isArray(adsrvrUids)) {
+            for (var i = 0; i < adsrvrUids.length; i++) {
+              if (adsrvrUids[i].ext && adsrvrUids[i].ext.rtiPartner === "TDID") {
+                tradeDeskId = adsrvrUids[i].id;
+              }
+            }
+          }
+        }
+      }
 
       var queryObj = {
         auid: auidString,
@@ -146,6 +167,7 @@ function OpenXHtb(configs) {
         cache: new Date().getTime()
       };
 
+      // add gdpr to query params
       if (gdprPrivacyEnabled) {
         if (gdprConsent.consentString !== void(0)) {
           queryObj.gdpr_consent = gdprConsent.consentString;
@@ -154,6 +176,11 @@ function OpenXHtb(configs) {
         if (gdprConsent.applies !== void(0)) {
           queryObj.gdpr = gdprConsent.applies ? '1' : '0';
         }
+      }
+
+      // add tdid to query params
+      if (tradeDeskId) {
+        queryObj.ttduuid = tradeDeskId;
       }
 
       return {
@@ -180,7 +207,6 @@ function OpenXHtb(configs) {
        */
       var gdprConsent = ComplianceService.gdpr.getConsent();
       var gdprPrivacyEnabled = ComplianceService.isPrivacyEnabled();
-
 
 
       var ads = adResponse.ads;

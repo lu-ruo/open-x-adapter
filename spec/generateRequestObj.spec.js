@@ -25,7 +25,7 @@
  * @param {object} partnerConfig
  * @returns []
  */
-function generateReturnParcels(profile, partnerConfig) {
+function generateReturnParcels(profile, partnerConfig, identityData) {
     var returnParcels = [];
 
     for (var htSlotName in partnerConfig.mapping) {
@@ -44,7 +44,8 @@ function generateReturnParcels(profile, partnerConfig) {
                     htSlot: htSlot,
                     ref: "",
                     xSlotRef: partnerConfig.xSlots[xSlotName],
-                    requestId: '_' + Date.now()
+                    requestId: '_' + Date.now(),
+                    identityData: identityData
                 });
             }
         }
@@ -66,6 +67,7 @@ describe('generateRequestObj', function () {
     var libraryStubData = require('./support/libraryStubData.js');
     var partnerModule = proxyquire('../open-x-htb.js', libraryStubData);
     var partnerConfig = require('./support/mockPartnerConfig.json');
+    var identityData = require('./support/mockIdentityData.json');
     var expect = require('chai').expect;
     /* -------------------------------------------------------------------- */
 
@@ -77,15 +79,15 @@ describe('generateRequestObj', function () {
     var returnParcels;
     var requestObject;
 
-    /* Generate a request object using generated mock return parcels. */
-    returnParcels = generateReturnParcels(partnerProfile, partnerConfig);
-
     /* -------- IF SRA, generate a single request for each parcel -------- */
     if (partnerProfile.architecture) {
-        requestObject = partnerModule.generateRequestObj(returnParcels);
 
         /* Simple type checking, should always pass */
         it('SRA - should return a correctly formatted object', function () {
+            /* Generate a request object using generated mock return parcels. */
+            returnParcels = generateReturnParcels(partnerProfile, partnerConfig);
+            requestObject = partnerModule.generateRequestObj(returnParcels);
+
             var result = inspector.validate({
                 type: 'object',
                 strict: true,
@@ -117,9 +119,10 @@ describe('generateRequestObj', function () {
 
         /* ---------- ADD MORE TEST CASES TO TEST AGAINST REAL VALUES ------------*/
         it('should correctly build a url with essential query params', function () {
-            /* Write unit tests to verify that your bid request url contains the correct
-                * request params, url, etc.
-                */
+            /* Generate a request object using generated mock return parcels. */
+            returnParcels = generateReturnParcels(partnerProfile, partnerConfig);
+            requestObject = partnerModule.generateRequestObj(returnParcels);
+
             var requestData = requestObject.data;
 
             expect(requestData).to.exist;
@@ -146,6 +149,48 @@ describe('generateRequestObj', function () {
                     gdpr: {
                         type: 'string',
                         eq: '1'
+                    }
+                }
+            }, requestData);
+
+            expect(result.valid).to.be.true;
+        });
+
+        it('should correctly build a url with essential query params and tdid if exists in identity data', function () {
+            /* Generate a request object using generated mock return parcels with identity data. */
+            returnParcels = generateReturnParcels(partnerProfile, partnerConfig, identityData);
+            requestObject = partnerModule.generateRequestObj(returnParcels);
+
+            var requestData = requestObject.data;
+
+            expect(requestData).to.exist;
+
+            var result = inspector.validate({
+                type: 'object',
+                properties: {
+                    auid: {
+                        type: 'string',
+                        eq: '54321,12345,654321'
+                    },
+                    aus: {
+                        type: 'string',
+                        eq: '300x250,300x600|300x600|728x90'
+                    },
+                    bc: {
+                        type: 'string',
+                        eq: 'hb_ix'
+                    },
+                    be: {
+                        type: 'number',
+                        eq: 1
+                    },
+                    gdpr: {
+                        type: 'string',
+                        eq: '1'
+                    },
+                    ttduuid: {
+                        type: 'string',
+                        eq: 'uid123'
                     }
                 }
             }, requestData);

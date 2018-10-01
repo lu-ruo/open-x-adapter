@@ -1,0 +1,15 @@
+{  
+    "AdserverOrgIp": {
+        "data": {
+            "source": "adserver.org",
+            "uids": [
+                {
+                    "id": "uid123",
+                    "ext": {
+                        "rtiPartner": "TDID"
+                    }
+                }
+            ]
+        }
+    }
+}
