@@ -417,10 +417,11 @@ function OpenXHtb(configs) {
 
         /* If wrapper is already active, we might be instantiated late so need to add our callback
            since the shell potentially missed its chance */
-        if (window[SpaceCamp.NAMESPACE]) {
+        if (SpaceCamp.NAMESPACE && window[SpaceCamp.NAMESPACE]) {
             window[SpaceCamp.NAMESPACE][__profile.namespace] = window[SpaceCamp.NAMESPACE][__profile.namespace] || {};
             window[SpaceCamp.NAMESPACE][__profile.namespace].adResponseCallbacks = __baseClass.getDirectInterface()[__profile.namespace].adResponseCallbacks;
         }
+
     })();
 
     /* =====================================

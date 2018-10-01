@@ -95,7 +95,7 @@ var libraryStubData = {
         }
     },
     'space-camp.js': {
-        NAMESPACE: 'headertag',
+        NAMESPACE: undefined,
         services: {
             EventsService: {
                 emit: function (eventName, data) {
