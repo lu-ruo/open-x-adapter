@@ -312,7 +312,8 @@ function OpenXHtb(configs) {
             var sizeKey = Size.arrayToString(curReturnParcel.size);
 
             if (bidDealId !== '') {
-                curReturnParcel.targeting[__baseClass._configs.targetingKeys.pm] = [sizeKey + '_' + bidDealId];
+                curReturnParcel.targeting[__baseClass._configs.targetingKeys.pm] = [sizeKey + '_' + bidPrice];
+                curReturnParcel.targeting[__baseClass._configs.targetingKeys.pmid] = [sizeKey + '_' + bidDealId];
             }
 
             curReturnParcel.targeting[__baseClass._configs.targetingKeys.om] = [sizeKey + '_' + targetingCpm];
@@ -361,7 +362,7 @@ function OpenXHtb(configs) {
       __profile = {
             partnerId: 'OpenXHtb',
             namespace: 'OpenXHtb',
-            statsId: 'OPNX',
+            statsId: 'OX',
             version: '2.1.1',
             targetingType: 'slot',
             enabledAnalytics: {
@@ -380,7 +381,8 @@ function OpenXHtb(configs) {
             targetingKeys: {
                 id: 'ix_ox_id',
                 om: 'ix_ox_om',
-                pm: 'ix_ox_pm'
+                pm: 'ix_ox_pm',
+                pmid: 'ix_ox_dealid'
             },
             bidUnitInCents: 0.1,
             lineItemType: Constants.LineItemTypes.ID_AND_SIZE,

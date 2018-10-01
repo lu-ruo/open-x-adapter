@@ -57,7 +57,7 @@ describe('Partner Profile', function () {
                 },
                 statsId: {
                     type: 'string',
-                    eq: 'OPNX'
+                    eq: 'OX'
                 },
                 version: {
                     type: 'string'
@@ -102,7 +102,7 @@ describe('Partner Profile', function () {
                                 if (targetingSplit[0] !== 'ix' ||
                                     targetingSplit[1] !== profile.statsId.toLowerCase() ||
                                     targetingSplit[2] !== 'id') {
-                                    this.report('id tageting key should be of the format ix_{OPNX}_id')
+                                    this.report('id tageting key should be of the format ix_ox_id')
                                 }
                             }
                         },
@@ -113,8 +113,8 @@ describe('Partner Profile', function () {
 
                                 if (targetingSplit[0] !== 'ix' ||
                                     targetingSplit[1] !== profile.statsId.toLowerCase() ||
-                                    targetingSplit[2] !== 'cpm') {
-                                    this.report('om tageting key should be of the format ix_OPNX_cpm')
+                                    targetingSplit[2] !== 'om') {
+                                    this.report('om tageting key should be of the format ix_ox_om')
                                 }
                             }
                         },
@@ -125,8 +125,8 @@ describe('Partner Profile', function () {
 
                                 if (targetingSplit[0] !== 'ix' ||
                                     targetingSplit[1] !== profile.statsId.toLowerCase() ||
-                                    targetingSplit[2] !== 'cpm') {
-                                    this.report('pm tageting key should be of the format ix_OPNX_cpm')
+                                    targetingSplit[2] !== 'pm') {
+                                    this.report('pm tageting key should be of the format ix_ox_pm')
                                 }
                             }
                         },
@@ -138,7 +138,7 @@ describe('Partner Profile', function () {
                                 if (targetingSplit[0] !== 'ix' ||
                                     targetingSplit[1] !== profile.statsId.toLowerCase() ||
                                     targetingSplit[2] !== 'dealid') {
-                                    this.report('pmid tageting key should be of the format ix_OPNX_dealid')
+                                    this.report('pmid tageting key should be of the format ix_ox_dealid')
                                 }
                             }
                         }
@@ -168,6 +168,10 @@ describe('Partner Profile', function () {
                 requestType: {
                     type: 'integer',
                     eq: [0, 1, 2]
+                },
+                parseAfterTimeout: {
+                    type: 'boolean',
+                    eq: true
                 }
             }
         }, profile);
