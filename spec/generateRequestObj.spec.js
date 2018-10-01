@@ -116,11 +116,41 @@ describe('generateRequestObj', function () {
             */
 
         /* ---------- ADD MORE TEST CASES TO TEST AGAINST REAL VALUES ------------*/
-        it('should correctly build a url', function () {
+        it('should correctly build a url with essential query params', function () {
             /* Write unit tests to verify that your bid request url contains the correct
                 * request params, url, etc.
                 */
-            expect(requestObject).to.exist;
+            var requestData = requestObject.data;
+
+            expect(requestData).to.exist;
+
+            var result = inspector.validate({
+                type: 'object',
+                properties: {
+                    auid: {
+                        type: 'string',
+                        eq: '54321,12345,654321'
+                    },
+                    aus: {
+                        type: 'string',
+                        eq: '300x250,300x600|300x600|728x90'
+                    },
+                    bc: {
+                        type: 'string',
+                        eq: 'hb_ix'
+                    },
+                    be: {
+                        type: 'number',
+                        eq: 1
+                    },
+                    gdpr: {
+                        type: 'string',
+                        eq: '1'
+                    }
+                }
+            }, requestData);
+
+            expect(result.valid).to.be.true;
         });
         /* -----------------------------------------------------------------------*/
 

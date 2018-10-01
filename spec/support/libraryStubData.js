@@ -56,7 +56,15 @@ var libraryStubData = {
     'partner.js': partnerStub,
     'openrtb.js': openRtbStub,
     'size.js': {
-        arrayToString: function (arr) {
+        arrayToString: function (arr, delim) {
+            var delim = delim || ',';
+            if (Array.isArray(arr[0])) {
+                var stringArr = [];
+                for (arrElem of arr) {
+                    stringArr.push(arrElem[0] + 'x' + arrElem[1]);
+                }
+                return stringArr.join(delim);
+            }
             return arr[0] + 'x' + arr[1];
         },
     },
