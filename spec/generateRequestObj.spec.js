@@ -68,6 +68,7 @@ describe('generateRequestObj', function () {
     var partnerModule = proxyquire('../open-x-htb.js', libraryStubData);
     var partnerConfig = require('./support/mockPartnerConfig.json');
     var identityData = require('./support/mockIdentityData.json');
+    var betaIdentityData = require('./support/mockBetaIdentityData.json');
     var expect = require('chai').expect;
     /* -------------------------------------------------------------------- */
 
@@ -157,8 +158,50 @@ describe('generateRequestObj', function () {
         });
 
         it('should correctly build a url with essential query params and tdid if exists in identity data', function () {
-            /* Generate a request object using generated mock return parcels with identity data. */
+            /* Generate a request object using generated mock return parcels which contain identity data. */
             returnParcels = generateReturnParcels(partnerProfile, partnerConfig, identityData);
+            requestObject = partnerModule.generateRequestObj(returnParcels);
+
+            var requestData = requestObject.data;
+
+            expect(requestData).to.exist;
+
+            var result = inspector.validate({
+                type: 'object',
+                properties: {
+                    auid: {
+                        type: 'string',
+                        eq: '54321,12345,654321'
+                    },
+                    aus: {
+                        type: 'string',
+                        eq: '300x250,300x600|300x600|728x90'
+                    },
+                    bc: {
+                        type: 'string',
+                        eq: 'hb_ix'
+                    },
+                    be: {
+                        type: 'number',
+                        eq: 1
+                    },
+                    gdpr: {
+                        type: 'string',
+                        eq: '1'
+                    },
+                    ttduuid: {
+                        type: 'string',
+                        eq: 'uid123'
+                    }
+                }
+            }, requestData);
+
+            expect(result.valid).to.be.true;
+        });
+
+        it('should correctly build a url with essential query params and tdid if exists in identity data in beta format', function () {
+            /* Generate a request object using generated mock return parcels which contain identity data. */
+            returnParcels = generateReturnParcels(partnerProfile, partnerConfig, betaIdentityData);
             requestObject = partnerModule.generateRequestObj(returnParcels);
 
             var requestData = requestObject.data;

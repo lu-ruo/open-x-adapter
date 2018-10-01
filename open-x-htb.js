@@ -144,6 +144,13 @@ function OpenXHtb(configs) {
               }
             }
           }
+          // identityData in beta format
+        } else if (identityData.AdserverOrgIp.data.uid) {
+          var adsrvrUid = identityData.AdserverOrgIp.data.uid;
+
+          if (adsrvrUid.ext && adsrvrUid.ext.rtiPartner === "TDID") {
+            tradeDeskId = adsrvrUid.id;
+          }
         }
       }
 
